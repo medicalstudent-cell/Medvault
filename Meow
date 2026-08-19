@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>MedVault</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f8fb;
+      color: #17324d;
+      line-height: 1.6;
+    }
+
+    header {
+      background: #0b5d7a;
+      color: white;
+      padding: 20px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 70px 20px;
+      background: white;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      margin-bottom: 15px;
+      color: #0b5d7a;
+    }
+
+    .hero p {
+      max-width: 700px;
+      margin: auto;
+      font-size: 18px;
+      color: #526777;
+    }
+
+    .search {
+      margin: 30px auto 0;
+      max-width: 550px;
+      display: flex;
+    }
+
+    .search input {
+      width: 100%;
+      padding: 15px;
+      border: 1px solid #ccd8e0;
+      border-radius: 8px 0 0 8px;
+      font-size: 16px;
+    }
+
+    .search button {
+      padding: 15px 22px;
+      border: none;
+      background: #0b5d7a;
+      color: white;
+      border-radius: 0 8px 8px 0;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    section {
+      padding: 50px 8%;
+    }
+
+    section h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 30px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card h3 {
+      color: #0b5d7a;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: #617384;
+    }
+
+    .about {
+      background: #e8f3f7;
+      text-align: center;
+    }
+
+    .about p {
+      max-width: 750px;
+      margin: auto;
+    }
+
+    footer {
+      background: #17324d;
+      color: white;
+      text-align: center;
+      padding: 25px;
+      margin-top: 30px;
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 36px;
+      }
+
+      nav a {
+        margin-left: 10px;
+        font-size: 14px;
+      }
+
+      .search {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .search input,
+      .search button {
+        border-radius: 8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">🩺 MedVault</div>
+
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#topics">Topics</a>
+      <a href="#about">About</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="hero" id="home">
+      <h1>Welcome to MedVault</h1>
+
+      <p>
+        A simple place to explore medical knowledge, study resources,
+        and important healthcare topics.
+      </p>
+
+      <div class="search">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search medical topics..."
+        >
+
+        <button onclick="searchTopics()">Search</button>
+      </div>
+    </section>
+
+    <section id="topics">
+      <h2>Explore Medical Topics</h2>
+
+      <div class="cards" id="topicCards">
+
+        <div class="card">
+          <h3>Anatomy</h3>
+          <p>Explore the structure of the human body and its systems.</p>
+        </div>
+
+        <div class="card">
+          <h3>Physiology</h3>
+          <p>Learn how the organs and systems of the body function.</p>
+        </div>
+
+        <div class="card">
+          <h3>Pharmacology</h3>
+          <p>Study medicines, their uses, and how they work.</p>
+        </div>
+
+        <div class="card">
+          <h3>Pathology</h3>
+          <p>Understand diseases and the changes they cause in the body.</p>
+        </div>
+
+        <div class="card">
+          <h3>Microbiology</h3>
+          <p>Explore bacteria, viruses, fungi, and other microorganisms.</p>
+        </div>
+
+        <div class="card">
+          <h3>Medical Notes</h3>
+          <p>A space for organized study notes and quick revision.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="about" id="about">
+      <h2>About MedVault</h2>
+
+      <p>
+        MedVault is designed as an educational medical knowledge platform.
+        Its goal is to make medical information easier to explore,
+        organize, and learn from.
+      </p>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>© 2026 MedVault. Educational resource.</p>
+  </footer>
+
+  <script>
+    function searchTopics() {
+      const searchInput =
+        document.getElementById("searchInput").value.toLowerCase();
+
+      const cards =
+        document.querySelectorAll(".card");
+
+      cards.forEach(function(card) {
+        const text = card.innerText.toLowerCase();
+
+        if (text.includes(searchInput)) {
+          card.style.display = "block";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
