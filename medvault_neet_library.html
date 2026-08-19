@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MedVault — NEET Medical Library</title>
+<style>
+:root{--bg:#f7f8fc;--card:#fff;--ink:#17202a;--muted:#71808f;--line:#e6eaf0;--blue:#315fce;--soft:#edf2ff;--teal:#2c9a91;--pink:#e86d91}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--ink)}
+header{position:sticky;top:0;z-index:10;background:#ffffffdd;backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:15px 5vw;display:flex;align-items:center;gap:24px}
+.logo{font-size:22px;font-weight:900;letter-spacing:-.5px}.logo span{color:var(--blue)}nav{display:flex;gap:6px;margin-left:auto}nav button,.ghost{border:0;background:transparent;padding:9px 12px;border-radius:9px;cursor:pointer;color:#52606d}nav button:hover,nav button.active{background:var(--soft);color:var(--blue)}
+main{max-width:1180px;margin:auto;padding:46px 22px}.hero{text-align:center;padding:35px 0 40px}.pill{display:inline-block;background:var(--soft);color:var(--blue);font-size:12px;font-weight:800;padding:7px 11px;border-radius:99px}.hero h1{font-size:clamp(36px,6vw,64px);line-height:1;margin:18px auto 14px;letter-spacing:-2.5px;max-width:850px}.hero p{color:var(--muted);max-width:650px;margin:0 auto 24px;line-height:1.6}
+.search{max-width:680px;margin:auto;display:flex;background:white;border:1px solid var(--line);box-shadow:0 12px 30px #1d2a3a0d;border-radius:15px;padding:6px}.search input{flex:1;border:0;outline:0;padding:13px;font-size:15px}.search button{border:0;background:var(--blue);color:white;border-radius:11px;padding:0 18px;font-weight:700;cursor:pointer}
+h2{font-size:22px;margin:0}.section{margin-top:28px}.sub{color:var(--muted);font-size:13px;margin:6px 0 16px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.resource{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:20px;cursor:pointer;transition:.18s}.resource:hover{transform:translateY(-3px);box-shadow:0 12px 30px #1d2a3a10}.icon{font-size:27px}.resource h3{margin:12px 0 6px}.resource p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+.chips{display:flex;gap:8px;flex-wrap:wrap}.chip{border:1px solid var(--line);background:white;padding:8px 12px;border-radius:99px;cursor:pointer;font-size:12px}.chip:hover{border-color:var(--blue);color:var(--blue)}
+.library{display:grid;grid-template-columns:1fr 1fr;gap:16px}.list{background:white;border:1px solid var(--line);border-radius:17px;padding:20px}.item{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid var(--line);align-items:center}.item:last-child{border:0}.badge{font-size:10px;background:var(--soft);color:var(--blue);padding:5px 7px;border-radius:6px;font-weight:800}.item b{font-size:14px}.item small{display:block;color:var(--muted);margin-top:3px}
+.modal{display:none;position:fixed;inset:0;background:#10172499;z-index:20;align-items:center;justify-content:center;padding:20px}.modal.show{display:flex}.modalbox{background:white;border-radius:20px;max-width:650px;width:100%;max-height:85vh;overflow:auto;padding:25px}.close{float:right;border:0;background:#f0f2f6;border-radius:9px;padding:7px 10px;cursor:pointer}.modalbox h2{margin:0 35px 8px 0}.flash{perspective:1000px;margin:20px 0}.flashcard{min-height:220px;position:relative;transform-style:preserve-3d;transition:.5s;cursor:pointer}.flashcard.flipped{transform:rotateY(180deg)}.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;background:var(--soft);display:flex;align-items:center;justify-content:center;text-align:center;padding:30px;font-size:21px;font-weight:750}.back{transform:rotateY(180deg);background:#eef8f7}.diagram{background:#fafbfe;border:1px solid var(--line);border-radius:16px;padding:20px;text-align:center;margin-top:15px}.heart{font-size:105px}.labelrow{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:10px}.label{padding:7px 10px;background:white;border:1px solid var(--line);border-radius:9px;font-size:12px}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:45px 20px}
+@media(max-width:800px){.grid{grid-template-columns:1fr 1fr}.library{grid-template-columns:1fr}nav{display:none}}
+@media(max-width:520px){.grid{grid-template-columns:1fr}.hero h1{letter-spacing:-1.5px}.search button{padding:0 12px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Med<span>Vault</span> 🩺</div>
+  <nav>
+    <button class="active" onclick="scrollToId('home')">Home</button>
+    <button onclick="openResource('Notes')">Notes</button>
+    <button onclick="openResource('Flashcards')">Flashcards</button>
+    <button onclick="openResource('Diagrams')">Diagrams</button>
+    <button onclick="openResource('PYQs')">PYQs</button>
+  </nav>
+</header>
+
+<main id="home">
+<section class="hero">
+  <span class="pill">NEET UG • MEDICAL STUDY LIBRARY</span>
+  <h1>Everything you need to understand medicine.</h1>
+  <p>Notes, diagrams, flashcards, PYQs and rapid revision — organized into one clean medical library.</p>
+  <div class="search"><input id="search" placeholder="Search: nephron, glycolysis, electrostatics..."><button onclick="searchLibrary()">Search</button></div>
+</section>
+
+<section class="section">
+<h2>Explore the library</h2><div class="sub">Pick a resource and start learning.</div>
+<div class="grid">
+<div class="resource" onclick="openResource('Notes')"><div class="icon">📚</div><h3>Notes</h3><p>Concise chapter notes for Physics, Chemistry and Biology.</p></div>
+<div class="resource" onclick="openResource('Flashcards')"><div class="icon">🧠</div><h3>Flashcards</h3><p>Active-recall cards for definitions, facts and concepts.</p></div>
+<div class="resource" onclick="openResource('Diagrams')"><div class="icon">🔬</div><h3>Diagrams</h3><p>High-yield biology and anatomy diagrams with labels.</p></div>
+<div class="resource" onclick="openResource('PYQs')"><div class="icon">📝</div><h3>PYQs</h3><p>Chapter-wise previous-year practice questions.</p></div>
+<div class="resource" onclick="openResource('Quick Revision')"><div class="icon">⚡</div><h3>Quick Revision</h3><p>Formulas, reactions, NCERT facts and one-liners.</p></div>
+<div class="resource" onclick="openResource('Medical Aesthetics')"><div class="icon">🫀</div><h3>Medical Aesthetics</h3><p>Anatomy-inspired visual learning and terminology.</p></div>
+</div>
+</section>
+
+<section class="section">
+<h2>Browse by subject</h2><div class="sub">Jump directly into a subject.</div>
+<div class="chips">
+<span class="chip" onclick="filter('Biology')">🧬 Biology</span><span class="chip" onclick="filter('Physics')">⚛️ Physics</span><span class="chip" onclick="filter('Chemistry')">🧪 Chemistry</span><span class="chip" onclick="filter('Human Physiology')">🫀 Human Physiology</span><span class="chip" onclick="filter('Botany')">🌿 Botany</span><span class="chip" onclick="filter('Zoology')">🦴 Zoology</span>
+</div>
+</section>
+
+<section class="section">
+<h2>Featured resources</h2><div class="sub">A small sample library to make the site immediately usable.</div>
+<div class="library" id="results">
+<div class="list"><h3>📖 Popular notes</h3>
+<div class="item"><span class="badge">BIO</span><div><b>Cell: The Unit of Life</b><small>Organelles • membranes • cell cycle</small></div></div>
+<div class="item"><span class="badge">BIO</span><div><b>Human Physiology</b><small>Neural control • circulation • excretion</small></div></div>
+<div class="item"><span class="badge">PHY</span><div><b>Kinematics</b><small>Motion • graphs • equations</small></div></div>
+<div class="item"><span class="badge">CHEM</span><div><b>Chemical Bonding</b><small>VSEPR • hybridisation • molecular shape</small></div></div>
+</div>
+<div class="list"><h3>🧠 Today's flashcards</h3>
+<div class="item"><span class="badge">1</span><div><b>What is the functional unit of kidney?</b><small>Tap Flashcards to reveal the answer.</small></div></div>
+<div class="item"><span class="badge">2</span><div><b>What is the SI unit of electric charge?</b><small>Physics rapid recall.</small></div></div>
+<div class="item"><span class="badge">3</span><div><b>Where does glycolysis occur?</b><small>Biochemistry quick recall.</small></div></div>
+<div class="item"><span class="badge">4</span><div><b>What is the powerhouse of the cell?</b><small>Cell biology.</small></div></div>
+</div>
+</div>
+</section>
+</main>
+
+<footer>MedVault • A prototype NEET medical learning library</footer>
+
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()"><div class="modalbox">
+<button class="close" onclick="closeModal()">✕</button><h2 id="modalTitle"></h2><p id="modalSub" class="sub"></p><div id="modalContent"></div>
+</div></div>
+
+<script>
+const data={
+Notes:{sub:'Concise, exam-focused study material.',content:`<div class="list"><div class="item"><span class="badge">BIO</span><div><b>Cell Biology</b><small>Cell organelles, membrane transport, cell cycle</small></div></div><div class="item"><span class="badge">BIO</span><div><b>Human Physiology</b><small>Digestion, breathing, circulation, excretion, neural control</small></div></div><div class="item"><span class="badge">PHY</span><div><b>Mechanics</b><small>Kinematics, Newton's laws, work-energy, circular motion</small></div></div><div class="item"><span class="badge">CHEM</span><div><b>Physical Chemistry</b><small>Mole concept, solutions, thermodynamics</small></div></div></div>`},
+Flashcards:{sub:'Click a card to flip it.',content:`<div class="flash"><div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="face">What is the functional unit of the kidney?</div><div class="face back">The nephron.</div></div></div><div class="flash"><div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="face">Where does glycolysis occur?</div><div class="face back">In the cytoplasm (cytosol).</div></div></div><div class="flash"><div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="face">What is the SI unit of electric charge?</div><div class="face back">Coulomb (C).</div></div></div>`},
+Diagrams:{sub:'High-yield visual learning.',content:`<div class="diagram"><div class="heart">🫀</div><b>Human heart — quick anatomy</b><div class="labelrow"><span class="label">Right atrium</span><span class="label">Left atrium</span><span class="label">Ventricles</span><span class="label">Aorta</span><span class="label">Pulmonary artery</span></div></div><div class="diagram"><b>More diagram categories</b><div class="labelrow"><span class="label">Nephron</span><span class="label">Neuron</span><span class="label">Chloroplast</span><span class="label">Flower</span><span class="label">DNA</span></div></div>`},
+PYQs:{sub:'Sample chapter-wise practice.',content:`<div class="list"><div class="item"><span class="badge">PHY</span><div><b>A particle starts from rest with constant acceleration. Which equation relates v, u, a and s?</b><small>Answer: v² = u² + 2as</small></div></div><div class="item"><span class="badge">BIO</span><div><b>Which organelle is primarily responsible for ATP production?</b><small>Answer: Mitochondrion</small></div></div><div class="item"><span class="badge">CHEM</span><div><b>Which quantum number determines the shape of an orbital?</b><small>Answer: Azimuthal quantum number (l)</small></div></div></div>`},
+'Quick Revision':{sub:'One-screen rapid recall.',content:`<div class="list"><div class="item"><span class="badge">PHY</span><div><b>v = u + at</b><small>First equation of uniformly accelerated motion.</small></div></div><div class="item"><span class="badge">PHY</span><div><b>F = ma</b><small>Newton's second law.</small></div></div><div class="item"><span class="badge">CHEM</span><div><b>n = m/M</b><small>Moles = given mass / molar mass.</small></div></div><div class="item"><span class="badge">BIO</span><div><b>DNA → RNA → Protein</b><small>Central dogma, simplified.</small></div></div></div>`},
+'Medical Aesthetics':{sub:'Visual medical-learning corner.',content:`<div class="diagram"><div style="font-size:70px">🧠 🫀 🫁 🦴</div><h3>Human body systems</h3><p class="sub">Explore anatomy, physiology terminology and high-yield visual concepts.</p><div class="labelrow"><span class="label">Nervous system</span><span class="label">Cardiovascular</span><span class="label">Respiratory</span><span class="label">Skeletal</span></div></div>`}
+};
+function openResource(name){let d=data[name]||data.Notes;document.getElementById('modalTitle').textContent=name;document.getElementById('modalSub').textContent=d.sub;document.getElementById('modalContent').innerHTML=d.content;document.getElementById('modal').classList.add('show')}
+function closeModal(){document.getElementById('modal').classList.remove('show')}
+function scrollToId(id){document.getElementById(id).scrollIntoView({behavior:'smooth'})}
+function filter(term){document.getElementById('search').value=term;searchLibrary()}
+function searchLibrary(){let q=document.getElementById('search').value.trim().toLowerCase();if(!q){alert('Try searching for something like “nephron”, “glycolysis”, or “electrostatics”.');return}let matches=[];Object.entries(data).forEach(([k,v])=>{if((k+' '+v.sub+' '+v.content).toLowerCase().includes(q))matches.push(k)});if(matches.length)openResource(matches[0]);else alert('No matching resource in this prototype yet. Try Notes, Flashcards, Diagrams, PYQs or Quick Revision.')}
+</script>
+</body>
+</html>
